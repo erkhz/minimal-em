@@ -2,11 +2,16 @@
 emStep <- function(data, clusters) {
   labels <- unique(clusters)
   priorProbs <- rep(0, length(labels))
-  # compute data
+  means <- rep(0, length(labels), ncol(data))
+  Sigmas <- rep(0, length(labels), ncol(data), ncol(data))
+
+  # compute prob, mu and sigma
   for (i in seq(length(labels))) {
     label <- labels[i]
     clusterData <- data[clusters == label, ]
-    priorProbs[i] <- nrow(clusterData) / nrow(data)
+    clusterSize <- nrow(clusterData)
+    priorProbs[i] <- clusterSize / nrow(data)
+    means[i, ] <- apply(clusterData, 2, sum) / clusterSize
   }
   return(rep(0, nrow(data)))
 }
