@@ -6,7 +6,7 @@
 mvNormPdf <- function(x, mu, precision) {
   r <- as.numeric(x - mu)
   dens <- exp(-0.5 * t(r) %*% precision %*% r)
-  normalization <- det(precision) / (2 * pi)^(length(x) / 2)
+  normalization <- sqrt(det(precision)) / (2 * pi)^(length(x) / 2)
   return(dens / normalization)
 }
 
